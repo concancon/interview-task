@@ -1,6 +1,6 @@
 <template>
-  <li>
-  <input type="checkbox" @change="$emit('finishTask', todo.id)" >
+  <li :class="{ inactive: todo.inactive }">
+  <input type="checkbox" @change="$emit('finishTask', todo.id)">
      {{todo.text}}
   <button @click="$emit('remove', todo.id)">
       X

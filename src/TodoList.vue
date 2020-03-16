@@ -8,7 +8,7 @@
         <button type="button" v-on:click="addTodo">
              Add 
         </button>
-		<ul v-if="todos.length">
+		<ul v-if="todos.length" style="list-style-type:none">
 			<ListItem 
 				v-for="todo in todos"
 				:key="todo.id"
@@ -20,11 +20,11 @@
         <p v-else>
 			Nothing left in the list. Add a new todo in the input above.
 		</p>
-        <ul v-if="finishedTasks.length">
-            <FinishedItem 
+        <ul v-if="finishedTasks.length" style="list-style-type:none">
+            <ListItem
             v-for="finishedTask in finishedTasks"
             :key="finishedTask.id"
-            :todo="finishedTask"  
+            :todo="finishedTask"
             @remove="removeTask"
             />
          </ul>
@@ -79,8 +79,9 @@ export default {
             if(finished){
             this.finishedTasks.push({ 
                 id: finished.id,
-                text: finished.text,
-                inactive: true 
+                text: finished.text, 
+                inactive: true,
+                isChecked: "checked"
             });
             }
             this.todos =  this.todos.filter(todo => {
