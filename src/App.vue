@@ -1,24 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1>You can start with your application here.</h1>
+    {{message}}
+    <br />
+    <br />
+    <TodoList/>
   </div>
 </template>
-
 <script>
 
+
+import TodoList from "./TodoList.vue"
+
 export default {
-  name: 'app',
-}
+  data() {
+    return {
+      message: "TO-DO List",
+  
+    };
+  },
+
+  components: {
+    TodoList
+  }
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #8da9ac;
   margin-top: 60px;
 }
 </style>

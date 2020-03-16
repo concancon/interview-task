@@ -1,0 +1,12 @@
+.todoTask{
+    background-color: aquamarine;
+}
+.finishedTask{
+    background-color: blue;
+}
+
+.inactive{
+
+    text-decoration: line-through;
+
+}
