@@ -81,7 +81,7 @@ export default {
                 id: finished.id,
                 text: finished.text, 
                 inactive: true,
-                isChecked: "checked"
+                checked: true
             });
             }
             this.todos =  this.todos.filter(todo => {
