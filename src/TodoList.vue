@@ -1,8 +1,7 @@
 <template>
 	<div>
-		<NewTask
+		<NewItem
 			v-model="newTodoText"
-			placeholder="New todo"
 			@keydown.enter="addTodo"
 		/>
         <button type="button" v-on:click="addTodo">
@@ -33,15 +32,15 @@
 </template>
 
 <script>
-import NewTask from './newTask.vue'
+import NewItem from './NewItem.vue'
 import ListItem from './ListItem.vue'
-import FinishedItem from './FinishedItem.vue'
+
 
 let nextTodoId = 1
 
 export default {
 	components: {
-		NewTask, ListItem, FinishedItem
+		NewItem, ListItem
 	},
   data () {
     return {
