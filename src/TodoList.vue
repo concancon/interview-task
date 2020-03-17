@@ -17,9 +17,7 @@
             v-on:addNew="addTodo"
 			@keydown.enter="addTodo"
 		/>
-        <button type="button" v-on:click="addTodo" class="button1">
-             Add task 
-        </button>
+       
 		<ul v-if="todos.length" style="list-style-type:none">
 			<ListItem 
 				v-for="todo in todos"
