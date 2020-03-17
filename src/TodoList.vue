@@ -1,11 +1,24 @@
+<style>
+.button1 {
+    border-radius: 60px ;
+    background-color: green;
+    color: white;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 8px;
+    padding: 3px 12px ;
+}
+</style>
 <template>
 	<div>
 		<NewItem
 			v-model="newTodoText"
 			@keydown.enter="addTodo"
 		/>
-        <button type="button" v-on:click="addTodo">
-             Add 
+        <button type="button" v-on:click="addTodo" class="button1">
+             Add task 
         </button>
 		<ul v-if="todos.length" style="list-style-type:none">
 			<ListItem 
