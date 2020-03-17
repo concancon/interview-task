@@ -14,7 +14,7 @@
 <template>
 	<div>
 		<NewItem
-			v-model="newTodoText"
+            v-on:addNew="addTodo"
 			@keydown.enter="addTodo"
 		/>
         <button type="button" v-on:click="addTodo" class="button1">
@@ -75,14 +75,14 @@ export default {
     }
   },
 	methods: {
-		addTodo () {
-			const trimmedText = this.newTodoText.trim()
+		addTodo (newTodo) {
+			const trimmedText = newTodo.trim();
 			if (trimmedText) {
 				this.todos.push({
 					id: nextTodoId++,
                     text: trimmedText,
 				})
-				this.newTodoText = ''
+				this.message = ''
 			}
         },
 		moveToDone (idToRemove) {
