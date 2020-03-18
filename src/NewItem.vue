@@ -1,10 +1,13 @@
+
 <template>
   <div>
-  <input v-model="newTodo" placeholder="Write your task here" @keyup.enter="$emit('addNew', newTodo)">
-  <br>
-   <button type="button" v-on:click="$emit('addNew', newTodo)" class="button1">
-             Add task 
-        </button>
+  <input
+    class="input"
+    type="text"
+    :value="value"
+    placeholder="What needs to be done?"
+    v-on="listeners"  
+  /> <br> 
 </div>
 </template>
 
@@ -12,10 +15,21 @@
 
 <script>
 export default {
-  data(){
-    return {
-      newTodo: ''
+  props: {
+    value: {
+      type: String,
+      default: ''
     }
-  }
+  },
+  computed: {
+    listeners () {
+      return {
+        // Pass all component listeners directly to input
+        ...this.$listeners,
+        // Override input listener to work with v-model
+        input: event => this.$emit('input', event.target.value)
+      }
+    }
+  },
 }
 </script>

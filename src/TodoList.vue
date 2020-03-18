@@ -14,10 +14,12 @@
 <template>
 	<div>
 		<NewItem
-            v-on:addNew="addTodo"
+			v-model="newTodoText"
 			@keydown.enter="addTodo"
 		/>
-       
+        <button type="button" v-on:click="addTodo" class="button1">
+             Add task 
+        </button>
 		<ul v-if="todos.length" style="list-style-type:none">
 			<ListItem 
 				v-for="todo in todos"
@@ -45,10 +47,7 @@
 <script>
 import NewItem from './NewItem.vue'
 import ListItem from './ListItem.vue'
-
-
 let nextTodoId = 1
-
 export default {
 	components: {
 		NewItem, ListItem
@@ -73,18 +72,17 @@ export default {
     }
   },
 	methods: {
-		addTodo (newTodo) {
-			const trimmedText = newTodo.trim();
+		addTodo () {
+			const trimmedText = this.newTodoText.trim()
 			if (trimmedText) {
 				this.todos.push({
 					id: nextTodoId++,
                     text: trimmedText,
 				})
-				this.message = ''
+				this.newTodoText = ''
 			}
         },
 		moveToDone (idToRemove) {
-
             const finished = this.todos.find(todo => {return todo.id === idToRemove});
             if(finished){
             this.finishedTasks.push({ 
@@ -105,11 +103,9 @@ export default {
           this.todos =  this.todos.filter(todo => {
 				return todo.id !== idToRemove
             })
-
           this.finishedTasks=  this.finishedTasks.filter(todo=> {
 				return todo.id !== idToRemove
             })
-
         }
 	}
 }
