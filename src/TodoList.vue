@@ -17,7 +17,7 @@
         v-for="todo in todos"
         :key="todo.id"
         :todo="todo"
-        @finishTask="moveToDone"
+        @finishTask="moveItem"
         @remove="removeTask"
       />
     </ul>
@@ -33,6 +33,7 @@
         v-for="finishedTask in finishedTasks"
         :key="finishedTask.id"
         :todo="finishedTask"
+        @finishTask="moveItem"
         @remove="removeTask"
       />
     </ul>
@@ -104,10 +105,16 @@ export default {
     },
     //method to move a user selected item from our todo list to our finished list.
     //this method restyles our items accordingly
-    moveToDone(idToRemove) {
+    moveItem(idToMove) {
       const finished = this.todos.find(todo => {
-        return todo.id === idToRemove;
+        return todo.id === idToMove;
       });
+      
+     const unfinished = this.finishedTasks.find(todo => {
+        return todo.id === idToMove;
+      });
+      
+
       if (finished) {
         this.finishedTasks.push({
           id: finished.id,
@@ -117,18 +124,30 @@ export default {
           disabled: true,
           disabledDelete: true
         });
-      }
-      this.todos = this.todos.filter(todo => {
-        return todo.id !== idToRemove;
+         this.todos = this.todos.filter(todo => {
+        return todo.id !== idToMove;
       });
+      }
+      else if(unfinished){
+        this.todos.push({
+          id: unfinished.id,
+          text: unfinished.text,
+          active: true
+        })
+
+       this.finishedTasks = this.finishedTasks.filter(todo => {
+        return todo.id !== idToMove;
+      });
+      }
+     
     },
     //method to remove a user selected task from either list
-    removeTask(idToRemove) {
+    removeTask(idToMove) {
       this.todos = this.todos.filter(todo => {
-        return todo.id !== idToRemove;
+        return todo.id !== idToMove;
       });
       this.finishedTasks = this.finishedTasks.filter(todo => {
-        return todo.id !== idToRemove;
+        return todo.id !== idToMove;
       });
     }
   }

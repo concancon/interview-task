@@ -9,7 +9,6 @@
         type="checkbox"
         class="checkboxStyle"
         v-model="todo.checked"
-        :disabled="todo.disabled"
         @change="$emit('finishTask', todo.id)"
       />
       <div class="state">
