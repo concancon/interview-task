@@ -1,12 +1,118 @@
-.todoTask{
-    background-color: aquamarine;
-}
-.finishedTask{
-    background-color: blue;
+.active {
+  color: black;
 }
 
-.inactive{
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #8da9ac;
+  margin-top: -15px;
+  margin-bottom: 1em;
+}
 
-    text-decoration: line-through;
+.button1 {
+  border-radius: 60px;
+  background-color: rgb(48, 194, 89);
+  color: white;
+  margin-bottom: 2 0px;
+  margin-bottom: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 99%;
+  font-weight: 500;
+  width: 125px;
+  height: 35px;
+}
 
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 20%;
+  right: 0.1%;
+  border: none;
+  background-color: inherit;
+  transform: scale(1.5);
+  font-weight: 600;
+  width: 30px;
+  height: 30px;
+}
+
+.disabledDelete {
+  color: grey;
+}
+
+div>h3 {
+  width: 280px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inactive {
+  color: grey;
+  text-decoration: line-through;
+}
+
+.input {
+  box-shadow: 0px 2px 1px 1px rgba(0, 0, 0, 0.2);
+  margin-top: -15px;
+  margin-bottom: 30px;
+  width: 265px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  padding: 0px 10px;
+  font-size: 100%;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 800;
+  color: rgba(127, 127, 127, 255);
+}
+
+.item {
+  box-shadow: 0px 4px 2px 1px rgba(0, 0, 0, 0.2);
+  width: 286px;
+  height: 47px;
+  text-align: left;
+  position: relative;
+  line-height: 45px;
+  margin-bottom: 10px;
+  padding-left: 4px;
+  font-weight: 800;
+  font-family: 'Heebo', sans-serif;
+}
+
+.pageTitle {
+  font-size: 27px;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 200;
+  color: rgb(177, 175, 175);
+}
+
+.pretty {
+  left: 4px;
+}
+
+.TodoListTitle {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: 'Heebo', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(165, 164, 164);
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+  margin-bottom: 20px;
+  margin-top: 6px;
+}
+
+.warning {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 400;
 }
