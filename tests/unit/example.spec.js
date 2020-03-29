@@ -3,7 +3,7 @@ import HelloWorld from '@/components/HelloWorld.vue'
 import ListItem from '@/ListItem.vue'
 
 describe('ListItem.vue', () => {
-  it('renders element text and when passed as argument', () => {
+  it('renders element text when passed as argument', () => {
     let nextTodoId= 0;
     const todo = {
       id: nextTodoId++,
@@ -14,8 +14,8 @@ describe('ListItem.vue', () => {
     const wrapper = shallowMount(ListItem, {
       propsData: { todo }
     })
-
-   expect(wrapper.props().todo.text).toBe(todo.text);
+    console.log(wrapper.html());
+   expect(wrapper.html()).toContain('<label class="active">Call Adam</label>');
   })
 
 
