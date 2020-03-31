@@ -44,6 +44,18 @@ describe('TodoList', () => {
 
 })
 
+describe('TodoList', () => {
+  it("finish task method as fired by clicking checkbox moves the element with id= 3 from finished todos to unfinished todos", async () => {
+
+    let FirstListItem = wrapper.findAll(ListItem);
+    expect(wrapper.find('.finishedTasks').html()).toContain('Call Adam');
+    FirstListItem.at(4).vm.$emit('finishTask', 0);
+    await Vue.nextTick();
+    expect(wrapper.find('.unfinishedTasks').html()).toContain('Call Adam');
+  })
+
+})
+
 
 
 
