@@ -7,10 +7,10 @@
     <NewItem v-model="newTodoText" @keydown.enter="addTodo" />
     <button type="button" v-on:click="addTodo" class="button1">Add task</button>
     <!-- conditionally rendered title and todo list -->
-    <div>
+    <div >
       <h3 v-if="todos.length" class="TodoListTitle">Not finished tasks</h3>
     </div>
-    <ul v-if="todos.length">
+    <ul class = "unfinishedTasks" v-if="todos.length">
       <!-- we use ListItem to display the contents of our todos array. The key binding allows us to address each element in the array individually -->
       <!-- we also map the events we defined in ListItem component to JS methdos defined below-->
       <ListItem
@@ -24,11 +24,11 @@
     <!-- display this message if nothing is left in the todo list-->
     <p v-else class="warning">Nothing left in the list.</p>
 
-    <div>
+    <div >
       <!-- same as above but for finished tasks. Only remove functionality is left -->
       <h3 v-if="finishedTasks.length" class="TodoListTitle">Finished tasks</h3>
     </div>
-    <ul v-if="finishedTasks.length">
+    <ul class= "finishedTasks" v-if="finishedTasks.length">
       <ListItem
         v-for="finishedTask in finishedTasks"
         :key="finishedTask.id"
