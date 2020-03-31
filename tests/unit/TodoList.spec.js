@@ -19,11 +19,10 @@ describe('TodoList', () => {
 
 
 describe('TodoList', () => {
-  it("finish task method is fired by clicking checkbox", async () => {
+  it("finish task method is fired by clicking checkbox", () => {
     const wrapper = mount(TodoList)
     let FirstListItem = wrapper.find(ListItem);
     FirstListItem.vm.$emit('finishTask', 0);
-    await Vue.nextTick();
     expect(FirstListItem.emitted().finishTask).toBeTruthy();
 
   })
@@ -34,7 +33,6 @@ describe('TodoList', () => {
     const wrapper = mount(TodoList)
     let FirstListItem = wrapper.find(ListItem);
     FirstListItem.vm.$emit('finishTask', 0);
-    await Vue.nextTick();
     expect(FirstListItem.emitted().finishTask).toEqual([[0]]);
 
   })
