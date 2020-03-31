@@ -45,6 +45,7 @@ import NewItem from "./NewItem.vue";
 import ListItem from "./ListItem.vue";
 let nextTodoId = 0;
 export default {
+  name: 'TodoList',
   components: {
     NewItem,
     ListItem
@@ -52,6 +53,7 @@ export default {
   data() {
     //default data in our application and data structures to hold user input
     return {
+      emitted: false,
       newTodoText: "",
       todos: [
         {
@@ -72,7 +74,7 @@ export default {
       ],
       finishedTasks: [
         {
-          id: 4,
+          id: 3,
           text: "Buy concert tickets",
           inactive: true,
           checked: true,
@@ -80,7 +82,7 @@ export default {
           disabledDelete: true
         },
         {
-          id: 5,
+          id: 4,
           text: "Call dad",
           inactive: true,
           checked: true,
@@ -91,6 +93,7 @@ export default {
     };
   },
   methods: {
+
     //method to add a new item to our list of todos
     addTodo() {
       const trimmedText = this.newTodoText.trim();
