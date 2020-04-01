@@ -1,7 +1,9 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import TodoList from '@/TodoList'
 import ListItem from '@/ListItem'
+import NewItem from "@/NewItem.vue";
 import Vue from 'vue'
+
 
 let wrapper = null
 let nextTodoId = 0;
@@ -64,6 +66,20 @@ describe('TodoList', () => {
     FirstListItem.at(3).vm.$emit('remove', 0);
     await Vue.nextTick();
     expect(wrapper.contains('Call Adam')).toBe(false);
+  })
+
+})
+
+describe('TodoList', () => {
+  it("add task method as fired by hitting enter adds a new todo task to list", async () => {
+
+    let newItem= wrapper.find(NewItem);
+    newItem.vm.$emit('input', 'test new task');
+    wrapper.find('button').trigger('click');
+    await Vue.nextTick();
+    expect(wrapper.find('.unfinishedTasks').html()).toContain('test new task');
+    
+   
   })
 
 })
