@@ -56,7 +56,17 @@ describe('TodoList', () => {
 
 })
 
+describe('TodoList', () => {
+  it("finish task method as fired by clicking X removes the element with id= 0", async () => {
 
+    let FirstListItem = wrapper.findAll(ListItem);
+    expect(wrapper.find('.unfinishedTasks').html()).toContain('Call Adam');
+    FirstListItem.at(3).vm.$emit('remove', 0);
+    await Vue.nextTick();
+    expect(wrapper.contains('Call Adam')).toBe(false);
+  })
+
+})
 
 
   //TODO: TEST THAT ALL OBJECTS IN BOTH THE TODO LIST AND THE FINISHED TASKS LISTS ARE RENDERED IN THEIR ENTIRETY, TEST TEXT INPUT, TEST X FUNCTIONALITY
