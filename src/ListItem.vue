@@ -8,7 +8,7 @@
       <input
         type="checkbox"
         class="checkboxStyle"
-        v-model="todo.checked"
+        :checked= "todo.inactive"
         @change="$emit('finishTask', todo.id)"
       />
       <div class="state">
@@ -22,7 +22,7 @@
     <!--The disabled class allows us to change the color of the x element -->
     <button
       class="close"
-      :class="{disabledDelete: todo.disabledDelete}"
+      :class="{disabledDelete: todo.inactive}"
       @click="$emit('remove', todo.id)"
     >X</button>
   </li>

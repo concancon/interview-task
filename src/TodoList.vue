@@ -76,18 +76,13 @@ export default {
         {
           id: 3,
           text: "Buy concert tickets",
-          inactive: true,
-          checked: true,
-          disabled: true,
-          disabledDelete: true
+          inactive: true
         },
         {
           id: 4,
           text: "Call dad",
-          inactive: true,
-          checked: true,
-          disabled: true,
-          disabledDelete: true
+          inactive: true, 
+          checked: true
         }
       ]
     };
@@ -122,10 +117,7 @@ export default {
         this.finishedTasks.push({
           id: finished.id,
           text: finished.text,
-          inactive: true,
-          checked: true,
-          disabled: true,
-          disabledDelete: true
+          inactive: true
         });
          this.todos = this.todos.filter(todo => {
         return todo.id !== idToMove;
