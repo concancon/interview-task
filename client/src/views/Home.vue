@@ -15,7 +15,7 @@
       <!-- we also map the events we defined in ListItem component to JS methdos defined below-->
       <ListItem
         v-for="todo in todos"
-        :key="todo.id"
+        :key="todo._id"
         :todo="todo"
         @finishTask="moveItem"
         @remove="removeTask"
@@ -31,7 +31,7 @@
     <ul class="finishedTasks" v-if="finishedTasks.length">
       <ListItem
         v-for="finishedTask in finishedTasks"
-        :key="finishedTask.id"
+        :key="finishedTask._id"
         :todo="finishedTask"
         @finishTask="moveItem"
         @remove="removeTask"
@@ -108,26 +108,28 @@ export default {
     // method to move a user selected item from our todo list to our finished list.
     // this method restyles our items accordingly
     moveItem(idToMove) {
-      const finished = this.todos.find((todo) => todo.id === idToMove);
+   
 
-      const unfinished = this.finishedTasks.find((todo) => todo.id === idToMove);
+      const finished = this.todos.find((todo) => todo._id === idToMove);
+
+      const unfinished = this.finishedTasks.find((todo) => todo._id === idToMove);
 
       if (finished) {
         this.finishedTasks.push({
-          id: finished.id,
+          _id: finished._id,
           text: finished.text,
           inactive: true,
         });
-        this.todos = this.todos.filter((todo) => todo.id !== idToMove);
+        this.todos = this.todos.filter((todo) => todo._id !== idToMove);
       } else if (unfinished) {
         this.todos.push({
-          id: unfinished.id,
+          _id: unfinished._id,
           text: unfinished.text,
           active: true,
         });
 
         this.finishedTasks = this.finishedTasks.filter(
-          (todo) => todo.id !== idToMove,
+          (todo) => todo._id !== idToMove,
         );
       }
     },

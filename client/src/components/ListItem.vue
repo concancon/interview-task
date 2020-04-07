@@ -9,7 +9,7 @@
         type="checkbox"
         class="checkboxStyle"
         :checked= "todo.inactive"
-        @change="$emit('finishTask', todo.id)"
+        @change="$emit('finishTask', todo._id)"
       />
       <div class="state">
         <i class="icon mdi mdi-check"></i>
@@ -23,7 +23,7 @@
     <button
       class="close"
       :class="{disabledDelete: todo.inactive}"
-      @click="$emit('remove', todo.id)"
+      @click="$emit('remove', todo._id)"
     >X</button>
   </li>
 </template>
