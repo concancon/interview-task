@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import NewItem from '/Users/camiloocampo/Desktop/Coding\ Challenges/Todo-Server/client/src/components/NewItem.vue';
-import ListItem from '/Users/camiloocampo/Desktop/Coding\ Challenges/Todo-Server/client/src/components/ListItem.vue';
+import NewItem from '@/components/NewItem.vue';
+import ListItem from '@/components/ListItem.vue';
 
 const API_URL = 'http://localhost:4000/todos';
 
