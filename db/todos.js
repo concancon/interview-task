@@ -34,11 +34,13 @@ function create(todo) {
     if (result.error == null) {
         console.log('trying to update todo with id ' + todo.id + 'isactive: ' + todo.active);
         if(todo.active == false){
-        return todos.update({_id: todo.id}, {$set: {inactive: true, active: false}})
+        todos.update({_id: todo.id}, {$set: {inactive: true, active: false}})
+        
         }
         else if (todo.active== true){
-            return todos.update({_id: todo.id}, {$set: {inactive: false, active: true}})
+        todos.update({_id: todo.id}, {$set: {inactive: false, active: true}})
         }
+        return todos.find();
        
     } else {
         console.log('trying to update todo failed')

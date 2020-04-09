@@ -41,42 +41,43 @@
 </template>
 
 <script>
-import NewItem from '@/components/NewItem.vue';
-import ListItem from '@/components/ListItem.vue';
+import NewItem from "@/components/NewItem.vue";
+import ListItem from "@/components/ListItem.vue";
 
-const API_URL = 'http://localhost:4000/todos';
-
+const API_URL = "http://localhost:4000/todos";
 
 export default {
-  name: 'home',
+  name: "home",
   components: {
     NewItem,
-    ListItem,
+    ListItem
   },
   data() {
     // default data in our application and data structures to hold user input
     return {
-      newTodoText: '',
+      newTodoText: "",
       todos: [],
-      finishedTasks: [],
+      finishedTasks: []
     };
   },
   mounted() {
     fetch(API_URL)
-      .then((response) => response.json())
-      .then((result) => {
-
-        result.forEach((element)=> {
-         if(element.active== true){
-           this.todos.push(element);
-         }
-         else if(element.inactive== true){
-           this.finishedTasks.push(element);
-         }
+      .then(response => response.json())
+      .then(result => {
+        result.forEach(element => {
+          if (element.active == true) {
+            this.todos.push(element);
+          } else if (element.inactive == true) {
+            this.finishedTasks.push(element);
+          }
           // else if(element.inactive== true){
           //   this.finishedTasks.push(element);
           // }
-        })
+        });
+        console.log("finishedTasks");
+        console.log(this.finishedTasks);
+        console.log("todos");
+        console.log(this.todos);
         // this.finishedTasks = result;
       });
   },
@@ -85,108 +86,107 @@ export default {
     addTodo() {
       const trimmedText = this.newTodoText.trim();
       let newTodo = {
-         "text": trimmedText,
-         "active" : true
-      }
+        text: trimmedText,
+        active: true
+      };
       if (newTodo) {
         fetch(API_URL, {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify(newTodo),
           headers: {
-            'content-type': 'application/json',
-          },
+            "content-type": "application/json"
+          }
         })
-          .then((response) => response.json())
-          .then((result) => {
+          .then(response => response.json())
+          .then(result => {
             if (result.details) {
               // there was an error...
-              console.log('there was indeed an error');
+              console.log("there was indeed an error");
               const error = result.details
-                .map((detail) => detail.todo)
-                .join('. ');
+                .map(detail => detail.todo)
+                .join(". ");
               this.error = error;
             } else {
-              this.error = '';
+              this.error = "";
               this.showMessageForm = false;
-              console.log('result from add')
+              console.log("result from add");
               console.log(result);
               this.todos.push(result);
             }
           });
 
-        this.newTodoText = '';
+        this.newTodoText = "";
       }
     },
     // method to move a user selected item from our todo list to our finished list.
     // this method restyles our items accordingly
     moveItem(idToMove) {
-      
-      //find whether this id is in the already finished tasks or in the outstanding tasks 
-     const finished = this.todos.find((todo) => todo._id === idToMove);
-     const unfinished = this.finishedTasks.find((todo) => todo._id === idToMove);
-     let newTodo;      
+      //find whether this id is in the already finished tasks or in the outstanding tasks
+      const finished = this.todos.find(todo => todo._id === idToMove);
+      const unfinished = this.finishedTasks.find(todo => todo._id === idToMove);
+      let newTodo;
 
-     if( typeof finished != "undefined") {
-     
-          newTodo = {
-         "id": finished._id,
-         "text": finished.text,
-         "active" : false,
-         "inactive" : true
-      }
-      }
-       else if(typeof unfinished != "undefined") {
-       
-          newTodo = {
-         "id": unfinished._id,
-         "text": unfinished.text,
-         "active" : true,
-         "inactive" : false
+      if (typeof finished != "undefined") {
+        newTodo = {
+          text: finished.text,
+          active: false,
+          inactive: true,
+          id: finished._id
+        };
+      } else if (typeof unfinished != "undefined") {
+        newTodo = {
+          text: unfinished.text,
+          active: true,
+          inactive: false,
+          id: unfinished._id
+        };
       }
 
-     }
-     
-   
       if (newTodo) {
         //if the task is in the outstanding todo list: call the Http put to update add an inactive : true attribute and remove active: true
         fetch(API_URL, {
-          method: 'PUT',
+          method: "PUT",
           body: JSON.stringify(newTodo),
           headers: {
-            'content-type': 'application/json',
-          },
+            "content-type": "application/json"
+          }
         })
-          .then((result) => {
+          .then(response => response.json())
+          .then(result => {
             if (result.details) {
               // there was an error...
-              console.log('there was indeed an error here');
+              console.log("there was indeed an error here");
               const error = result.details
-                .map((detail) => detail.todo)
-                .join('. ');
+                .map(detail => detail.todo)
+                .join(". ");
               this.error = error;
             } else {
-              this.error = '';
+              this.error = "";
               this.showMessageForm = false;
-              if( typeof finished != "undefined") { 
-                this.finishedTasks.push(newTodo);
-                this.todos = this.todos.filter(todo => todo._id != newTodo.id) 
-              }
-                else if( typeof unfinished != "undefined") { 
-                this.todos.push(newTodo);
-                this.finishedTasks = this.finishedTasks.filter(todo => todo._id != newTodo.id) 
-              }
+              console.log("result!!!!!!");
+              console.log(result);
+              this.todos = []
+              this.finishedTasks= []
+              result.forEach(element => {
+                if (element.active == true) {
+                  this.todos.push(element);
+                } else if (element.inactive == true) {
+                  this.finishedTasks.push(element);
+                }
+              });
+
+              
             }
           });
-
       }
     },
     // method to remove a user selected task from either list
     removeTask(idToMove) {
-      this.todos = this.todos.filter((todo) => todo.id !== idToMove);
+      this.todos = this.todos.filter(todo => todo.id !== idToMove);
       this.finishedTasks = this.finishedTasks.filter(
-        (todo) => todo.id !== idToMove,
+        todo => todo.id !== idToMove
       );
-    },
-  },
+    }
+  }
 };
 </script>

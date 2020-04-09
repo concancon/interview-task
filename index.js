@@ -38,8 +38,8 @@ app.post('/todos', (req, res) => {
 
 app.put('/todos', (req, res) =>{
     console.log(req.body);
-    todos.update(req.body).then((todo)=> { 
-        res.json(todo);
+    todos.update(req.body).then((todos)=> { 
+        res.json(todos);
     }).catch((error) => {
         res.status(500);
         res.json(error);
