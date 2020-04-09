@@ -65,18 +65,28 @@ export default {
     fetch(API_URL)
       .then((response) => response.json())
       .then((result) => {
-        this.todos = result;
+
+        result.forEach((element)=> {
+         if(element.active== true){
+           this.todos.push(element);
+         }
+         else if(element.inactive== true){
+           this.finishedTasks.push(element);
+         }
+          // else if(element.inactive== true){
+          //   this.finishedTasks.push(element);
+          // }
+        })
+        // this.finishedTasks = result;
       });
   },
   methods: {
     // method to add a new item to our list of todos
     addTodo() {
       const trimmedText = this.newTodoText.trim();
-      console.log(trimmedText);
       let newTodo = {
          "text": trimmedText,
-         "active" : "true"
-       
+         "active" : true
       }
       if (newTodo) {
         fetch(API_URL, {
@@ -98,6 +108,8 @@ export default {
             } else {
               this.error = '';
               this.showMessageForm = false;
+              console.log('result from add')
+              console.log(result);
               this.todos.push(result);
             }
           });
@@ -108,29 +120,64 @@ export default {
     // method to move a user selected item from our todo list to our finished list.
     // this method restyles our items accordingly
     moveItem(idToMove) {
+      
+      //find whether this id is in the already finished tasks or in the outstanding tasks 
+     const finished = this.todos.find((todo) => todo._id === idToMove);
+     const unfinished = this.finishedTasks.find((todo) => todo._id === idToMove);
+     let newTodo;      
+
+     if( typeof finished != "undefined") {
+     
+          newTodo = {
+         "id": finished._id,
+         "text": finished.text,
+         "active" : false,
+         "inactive" : true
+      }
+      }
+       else if(typeof unfinished != "undefined") {
+       
+          newTodo = {
+         "id": unfinished._id,
+         "text": unfinished.text,
+         "active" : true,
+         "inactive" : false
+      }
+
+     }
+     
    
+      if (newTodo) {
+        //if the task is in the outstanding todo list: call the Http put to update add an inactive : true attribute and remove active: true
+        fetch(API_URL, {
+          method: 'PUT',
+          body: JSON.stringify(newTodo),
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+          .then((result) => {
+            if (result.details) {
+              // there was an error...
+              console.log('there was indeed an error here');
+              const error = result.details
+                .map((detail) => detail.todo)
+                .join('. ');
+              this.error = error;
+            } else {
+              this.error = '';
+              this.showMessageForm = false;
+              if( typeof finished != "undefined") { 
+                this.finishedTasks.push(newTodo);
+                this.todos = this.todos.filter(todo => todo._id != newTodo.id) 
+              }
+                else if( typeof unfinished != "undefined") { 
+                this.todos.push(newTodo);
+                this.finishedTasks = this.finishedTasks.filter(todo => todo._id != newTodo.id) 
+              }
+            }
+          });
 
-      const finished = this.todos.find((todo) => todo._id === idToMove);
-
-      const unfinished = this.finishedTasks.find((todo) => todo._id === idToMove);
-
-      if (finished) {
-        this.finishedTasks.push({
-          _id: finished._id,
-          text: finished.text,
-          inactive: true,
-        });
-        this.todos = this.todos.filter((todo) => todo._id !== idToMove);
-      } else if (unfinished) {
-        this.todos.push({
-          _id: unfinished._id,
-          text: unfinished.text,
-          active: true,
-        });
-
-        this.finishedTasks = this.finishedTasks.filter(
-          (todo) => todo._id !== idToMove,
-        );
       }
     },
     // method to remove a user selected task from either list

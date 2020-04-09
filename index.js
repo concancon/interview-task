@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const todos = require('./db/todos');
+//const finishedTasks = require('.db/finishedTasks')
 
 
 const app = express();
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
  
 
 app.get('/todos', (req, res) => {
-    todos.getAll().then((todos) => {
+    todos.getAllTodos().then((todos) => {
         res.json(todos);
     });
 });
@@ -34,6 +35,19 @@ app.post('/todos', (req, res) => {
         res.json(error);
     });
 });
+
+app.put('/todos', (req, res) =>{
+    console.log(req.body);
+    todos.update(req.body).then((todo)=> { 
+        res.json(todo);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+
+})
+
+
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
