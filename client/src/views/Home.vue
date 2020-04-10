@@ -128,17 +128,21 @@ export default {
 
       if (typeof finished != "undefined") {
         newTodo = {
+          _id: finished._id,
           text: finished.text,
           active: false,
           inactive: true,
-          id: finished._id
+          
+        
         };
       } else if (typeof unfinished != "undefined") {
         newTodo = {
+          _id: unfinished._id,
           text: unfinished.text,
           active: true,
           inactive: false,
-          id: unfinished._id
+          
+         
         };
       }
   if (newTodo) {
@@ -162,15 +166,30 @@ export default {
             } else {
               this.error = "";
               this.showMessageForm = false;
-              this.todos = []
-              this.finishedTasks= []
-              result.forEach(element => {
-                if (element.active == true) {
-                  this.todos.push(element);
-                } else if (element.inactive == true) {
-                  this.finishedTasks.push(element);
-                }
-              });
+              if( typeof finished != "undefined") { 
+                this.finishedTasks.push(newTodo);
+                this.todos = this.todos.filter(todo => todo._id != newTodo._id) 
+              }
+                else if( typeof unfinished != "undefined") { 
+                this.todos.push(newTodo);
+                this.finishedTasks = this.finishedTasks.filter(todo => todo._id != newTodo._id) 
+              }
+            
+              
+              
+              
+              
+              
+              
+              // this.todos = []
+              // this.finishedTasks= []
+              // result.forEach(element => {
+              //   if (element.active == true) {
+              //     this.todos.push(element);
+              //   } else if (element.inactive == true) {
+              //     this.finishedTasks.push(element);
+              //   }
+              // });
           
             }
           });
@@ -180,10 +199,11 @@ export default {
     removeTask(idToMove) {  
           
           let newTodo = {
+           _id: idToMove,
           text: "test",
           active: true,
           inactive: false,
-          id: idToMove
+         
         };
       
       fetch(API_URL, {

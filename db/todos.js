@@ -4,7 +4,7 @@ const db = require('./connection');
  
 
 const schema = Joi.object().keys({
-    id: Joi.objectId(),
+    _id: Joi.objectId,
     text: Joi.string().required(),
     active: Joi.bool(),
     inactive: Joi.bool()
@@ -30,17 +30,19 @@ function create(todo) {
 }
 
  function update(todo){
+
     const result = schema.validate(todo);  
     if (result.error == null) {
-        console.log('trying to update todo with id ' + todo.id + 'isactive: ' + todo.active);
+    
+        console.log('trying to update todo with id ' + todo._id + 'isactive: ' + todo.active);
         if(todo.active == false){
-        todos.update({_id: todo.id}, {$set: {inactive: true, active: false}})
+         return todos.update({_id: todo._id}, {$set: {inactive: true, active: false}})
         
         }
         else if (todo.active== true){
-        todos.update({_id: todo.id}, {$set: {inactive: false, active: true}})
+         return todos.update({_id: todo._id}, {$set: {inactive: false, active: true}})
         }
-        return todos.find() ;
+         
        
     } else {
         console.log('trying to update todo failed')
@@ -53,8 +55,8 @@ function remove(todo){
     console.log('remove called');
     const result= schema.validate(todo)
     if (result.error == null) {
-        console.log('trying to delete todo with id ' + todo.id + 'isactive: ' + todo.active);
-       return todos.remove({_id: todo.id})
+        console.log('trying to delete todo with id ' + todo._id + 'isactive: ' + todo.active);
+       return todos.remove({_id: todo._id})
           
         
     }
