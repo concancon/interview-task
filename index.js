@@ -47,6 +47,16 @@ app.put('/todos', (req, res) =>{
 
 })
 
+app.delete('/todos', (req, res) =>{
+    console.log(req.body);
+    todos.remove(req.body).then((todos)=> { 
+        res.json(todos);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+
+})
 
 
 const port = process.env.PORT || 4000;

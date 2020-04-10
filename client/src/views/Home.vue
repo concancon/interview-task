@@ -141,8 +141,7 @@ export default {
           id: unfinished._id
         };
       }
-
-      if (newTodo) {
+  if (newTodo) {
         //if the task is in the outstanding todo list: call the Http put to update add an inactive : true attribute and remove active: true
         fetch(API_URL, {
           method: "PUT",
@@ -163,8 +162,6 @@ export default {
             } else {
               this.error = "";
               this.showMessageForm = false;
-              console.log("result!!!!!!");
-              console.log(result);
               this.todos = []
               this.finishedTasks= []
               result.forEach(element => {
@@ -174,18 +171,50 @@ export default {
                   this.finishedTasks.push(element);
                 }
               });
-
-              
+          
             }
           });
       }
     },
     // method to remove a user selected task from either list
-    removeTask(idToMove) {
-      this.todos = this.todos.filter(todo => todo.id !== idToMove);
-      this.finishedTasks = this.finishedTasks.filter(
-        todo => todo.id !== idToMove
-      );
+    removeTask(idToMove) {  
+          
+          let newTodo = {
+          text: "test",
+          active: true,
+          inactive: false,
+          id: idToMove
+        };
+      
+      fetch(API_URL, {
+          method: "DELETE",
+          body: JSON.stringify(newTodo),
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+         .then(result => {
+            if (result.details) {
+              // there was an error...
+              console.log("there was indeed an error here");
+              const error = result.details
+                .map(detail => detail.todo)
+                .join(". ");
+              this.error = error;
+            } else {
+              this.error = "";
+              this.showMessageForm = false;
+              console.log(result);
+              this.finishedTasks = this.finishedTasks.filter(todo => {
+               return todo._id !== idToMove;
+              });
+              this.todos = this.todos.filter(todo => {
+               return todo._id !== idToMove;
+              });
+              
+          
+            }
+          });
     }
   }
 };

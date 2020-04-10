@@ -40,7 +40,7 @@ function create(todo) {
         else if (todo.active== true){
         todos.update({_id: todo.id}, {$set: {inactive: false, active: true}})
         }
-        return todos.find();
+        return todos.find() ;
        
     } else {
         console.log('trying to update todo failed')
@@ -49,8 +49,23 @@ function create(todo) {
 
 }
 
+function remove(todo){
+    console.log('remove called');
+    const result= schema.validate(todo)
+    if (result.error == null) {
+        console.log('trying to delete todo with id ' + todo.id + 'isactive: ' + todo.active);
+       return todos.remove({_id: todo.id})
+          
+        
+    }
+     else {
+            console.log('trying to delete todo failed')
+            return Promise.reject(result.error);
+     }
+}
 module.exports = {
     create,
     getAllTodos,
-    update
+    update, 
+    remove
 };
