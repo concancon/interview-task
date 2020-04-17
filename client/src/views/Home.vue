@@ -44,7 +44,7 @@
 import NewItem from "@/components/NewItem.vue";
 import ListItem from "@/components/ListItem.vue";
 
-const API_URL = "http://localhost:4000/todos";
+const API_URL = "http://192.168.0.3:4000/todos";
 
 export default {
   name: "home",
@@ -175,22 +175,6 @@ export default {
                 this.finishedTasks = this.finishedTasks.filter(todo => todo._id != newTodo._id) 
               }
             
-              
-              
-              
-              
-              
-              
-              // this.todos = []
-              // this.finishedTasks= []
-              // result.forEach(element => {
-              //   if (element.active == true) {
-              //     this.todos.push(element);
-              //   } else if (element.inactive == true) {
-              //     this.finishedTasks.push(element);
-              //   }
-              // });
-          
             }
           });
       }
